@@ -101,4 +101,9 @@ public class GlobalExceptionHandler {
         errorResponse.setTimestamp(LocalDateTime.now());
         return ResponseEntity.status(status).body(errorResponse);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException ex) {
+        return createErrorResponse("IllegalArgumentException", ex.getMessage(), request, HttpStatus.BAD_REQUEST);
+    }
 }
