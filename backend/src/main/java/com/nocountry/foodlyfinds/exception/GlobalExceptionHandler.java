@@ -101,4 +101,5 @@ public class GlobalExceptionHandler {
         errorResponse.setTimestamp(LocalDateTime.now());
         return ResponseEntity.status(status).body(errorResponse);
     }
+
 }

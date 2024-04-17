@@ -1,31 +1,32 @@
 package com.nocountry.foodlyfinds.model.service.impl;
 
-import com.nocountry.foodlyfinds.model.entity.CalificationEntity;
+import com.nocountry.foodlyfinds.exception.IllegalArgumentException;
+import com.nocountry.foodlyfinds.model.entity.QualificationEntity;
 import com.nocountry.foodlyfinds.model.entity.StoreEntity;
 import com.nocountry.foodlyfinds.model.entity.UserTblEntity;
-import com.nocountry.foodlyfinds.model.repository.CalificationRepository;
+import com.nocountry.foodlyfinds.model.repository.QualificationRepository;
 import com.nocountry.foodlyfinds.model.repository.StoreRepository;
 import com.nocountry.foodlyfinds.model.repository.UserRepository;
-import com.nocountry.foodlyfinds.model.service.CalificationService;
+import com.nocountry.foodlyfinds.model.service.QualificationService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CalificationServiceImpl implements CalificationService {
+public class QualificationServiceImpl implements QualificationService {
 
-    private final CalificationRepository calificationRepository;
+    private final QualificationRepository qualificationRepository;
     private final  UserRepository userRepository;
     private final StoreRepository storeRepository;
-    public CalificationServiceImpl(CalificationRepository calificationRepository, UserRepository userRepository, StoreRepository storeRepository) {
-        this.calificationRepository = calificationRepository;
+
+    public QualificationServiceImpl(QualificationRepository qualificationRepository, UserRepository userRepository, StoreRepository storeRepository) {
+        this.qualificationRepository = qualificationRepository;
         this.userRepository = userRepository;
         this.storeRepository = storeRepository;
     }
 
-    @Transactional
+
     @Override
-    public void createCalification(Long userId, Long storeId, Integer value){
+    public void createQualification(Long userId, Long storeId, Integer value){
         UserTblEntity user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id "+ userId));
         StoreEntity store = storeRepository.findById(storeId).orElseThrow(() -> new EntityNotFoundException("Store not found with id " + storeId));
 
@@ -33,11 +34,11 @@ public class CalificationServiceImpl implements CalificationService {
             throw new IllegalArgumentException("La puntuación debe ser 0 o 1 .");
         }
 
-        CalificationEntity calification = new CalificationEntity();
-        calification.setUser(user);
-        calification.setStore(store);
-        calification.setValue(value);
+        QualificationEntity qualification = new QualificationEntity();
+        qualification.setUser(user);
+        qualification.setStore(store);
+        qualification.setValue(value);
 
-        calificationRepository.save(calification);
+        qualificationRepository.save(qualification);
     }
 }

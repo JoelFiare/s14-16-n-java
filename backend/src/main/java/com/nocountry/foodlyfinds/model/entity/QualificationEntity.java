@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Table(name = "calification_tbl")
-public class CalificationEntity {
+public class QualificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long calificationId;
