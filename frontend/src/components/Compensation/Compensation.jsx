@@ -13,6 +13,7 @@ const compensationList = {
     {
       name: "time",
       description: "Tiempo de espera",
+      border: true,
     },
     {
       name: "quality",
@@ -22,11 +23,12 @@ const compensationList = {
   compensation: [
     {
       name: "present",
-      description: "Mi comida en condiciones más otro producto de regalo",
+      description: "Pedido correcto más otro producto de regalo",
     },
     {
       name: "refund",
       description: "Devolución del dinero",
+      border: true,
     },
     {
       name: "coupon",
@@ -38,7 +40,7 @@ const compensationList = {
 export default function Compensation() {
   const navigate = useNavigate()
 
-  const handleOnBtnClick = () => setTimeout(navigate, 1e3, 'busqueda/pagar/final-con-reclamo')
+  const handleOnBtnClick = () => setTimeout(navigate, 1e3, '../final-con-reclamo')
   return (
     <>
       <Form className="compensation">
