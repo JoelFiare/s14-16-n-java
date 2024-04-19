@@ -47,7 +47,7 @@ function App() {
     setDataProducts(uriProduct)
     setDataOrder(order)
   }, []);
-console.log(dataProducts)
+
   return (
     <>
       <AppContext.Provider
