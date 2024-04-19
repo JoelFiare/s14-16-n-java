@@ -28,7 +28,7 @@ export default function Search({
       <Popup name={'filter'} param='s'>
         <menu className='menu-filter'>
           <h4>Filtros de búsqueda</h4>
-          {buttons.map(b => <Radio >{b}</Radio>)}
+          {buttons.map((b , i) => <Radio key={i}>{b}</Radio>)}
           <button type='button'>Confirmar</button>
         </menu>
       </Popup>
