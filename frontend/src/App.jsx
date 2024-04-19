@@ -25,6 +25,7 @@ import OrderDetails from "./components/OrderDetails/OrderDetails";
 import { order } from './data/order'
 import Building from "./components/Building/Building";
 
+
 function App() {
   const [dataProducts, setDataProducts] = useState([]);
   const [dataOrder, setDataOrder] = useState([])
@@ -32,21 +33,21 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(uriProduct)
-      .then((response) => {
-        setDataProducts(response.data);
-      })
-      .catch(error => {
-        console.error('Error getting data:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
+    // axios
+    //   .get(uriProduct)
+    //   .then((response) => {
+    //     setDataProducts(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error getting data:', error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+    setDataProducts(uriProduct)
     setDataOrder(order)
   }, []);
-
+console.log(dataProducts)
   return (
     <>
       <AppContext.Provider
@@ -92,7 +93,7 @@ function App() {
                   path="confirmar"
                   element={<ConfirmOrder order={dataOrder} />}
                 />
-                
+
                 <Route
                   path="medio-de-pago"
                   element={<Payout />}
