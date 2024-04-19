@@ -19,10 +19,10 @@ const ChosenProduct = () => {
 
   useEffect(() => {
     // Buscar el producto correspondiente usando el ID del producto seleccionado
+
     if (selectedProduct) {
-      const product = dataProducts.find(
-        (item) => item.productId === selectedProduct
-      );
+      // filtrando por id del producto seleccionado
+      const product = dataProducts.filter(item => item.productId === selectedProduct)[0]
       setSelectedProductData(product);
     }
   }, [selectedProduct, dataProducts]);
@@ -52,20 +52,20 @@ const ChosenProduct = () => {
       <section className="infoRestaurant">
         <img
           className="imageRestaurant"
-          src={selectedProductData.storeId.storeImageUrl}
-          alt={selectedProductData.storeId.name}
+          src={selectedProductData.store.storeImageUrl}
+          alt={selectedProductData.store.name}
         />
         <section className="infoStore">
           <div className="child1">
             <img
               className="storeLogo"
-              src={selectedProductData.storeId.storeImageUrl}
-              alt={selectedProductData.storeId.name}
+              src={selectedProductData.store.storeImageUrl}
+              alt={selectedProductData.store.name}
             />
           </div>
           <div className="child2">
-            <p className="storeName">{selectedProductData.storeId.name}</p>
-            <p className="storeAddres">{selectedProductData.storeId.address}</p>
+            <p className="storeName">{selectedProductData.store.name}</p>
+            <p className="storeAddres">{selectedProductData.store.address}</p>
           </div>
           <div className="child3 storeIcon pointer">
             <FontAwesomeIcon icon={faShop} />
@@ -96,7 +96,7 @@ const ChosenProduct = () => {
               <h2 className="productNameFood">{selectedProductData.name}</h2>
               <h2 className="categoryFood">
                 {" "}
-                {selectedProductData.categoryId.name}
+                {selectedProductData.category.name}
               </h2>
             </article>
             <article className="nameFood child6 trashIcon ">
