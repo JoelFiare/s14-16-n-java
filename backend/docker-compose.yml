@@ -11,6 +11,9 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - db
+    volumes:
+      - app_data:/path/to/app/data
+
   db:
     container_name: postgres_db
     image: postgres:16-alpine
@@ -21,3 +24,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=foodlyfinds
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+    app_data:
+    db_data:
