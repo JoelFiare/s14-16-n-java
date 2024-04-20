@@ -12,10 +12,15 @@ import "./ChosenProduct.css";
 import Spinner from "../share/Spinner/Spinner";
 
 const ChosenProduct = () => {
+  // id producto seleccionado y lista de productos
   const { selectedProduct, dataProducts } = useContext(AppContext);
   const [confirmOrder, setConfirmOrder] = useState(false);
   const [goToMenu, setGoToMenu] = useState(false);
+  // si encuentra el producto lo almacenas aqui ->
   const [selectedProductData, setSelectedProductData] = useState(null);
+
+  // cantidad de producto
+  const [productQuantity, setProductQuantity] = useState(1)
 
   useEffect(() => {
     // Buscar el producto correspondiente usando el ID del producto seleccionado
@@ -34,6 +39,11 @@ const ChosenProduct = () => {
   const handleBackToMenu = () => {
     setGoToMenu(true);
   };
+
+  const handleOnQuantityChange = (value) => {
+    if(productQuantity + value <= 0) return
+    setProductQuantity(productQuantity + (value))
+  }
 
   if (confirmOrder) {
     return <Navigate to={"../confirmar"} />;
@@ -72,6 +82,8 @@ const ChosenProduct = () => {
           </div>
         </section>
       </section>
+
+
       <div className="wrapperInfoFood">
         <div className="listTitle">
           <FontAwesomeIcon
@@ -124,23 +136,27 @@ const ChosenProduct = () => {
                 className="btnLess btnsReset"
                 type="button"
                 value="-"
+                onClick={() => handleOnQuantityChange(-1)}
               />
 
               <input
                 className="count btnsReset"
                 type="button"
-                value="1"
+                value={productQuantity}
               />
               <input
                 className="btnMore btnsReset"
                 type="button"
                 value="+"
+                onClick={() => handleOnQuantityChange(1)}
               />
             </div>
-            <div className="price">$ 15000</div>
+            <div className="price">${selectedProductData.price !== 0 ? selectedProductData.price * productQuantity : '0000'}</div>
           </div>
         </div>
       </div>
+
+
 
       <div className="columnBtns">
         <input
