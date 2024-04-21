@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             "AND (:categoryId IS NULL OR p.categoryId.categoryId = :categoryId) " +
             "AND (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
             "AND (:storeId IS NULL OR p.storeId.storeId = :storeId) " +
-            "AND (:ingredients IS NULL OR LOWER(p.ingredients) LIKE LOWER(CONCAT('%', :ingredients, '%')))")
+            "AND (:ingredients IS NULL OR LOWER(CAST(p.ingredients AS text)) LIKE LOWER(CONCAT('%', :ingredients, '%')))")
     List<ProductEntity> searchProducts(@Param("id") Long id,
                                        @Param("categoryId") Long categoryId,
                                        @Param("name") String name,
