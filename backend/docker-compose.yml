@@ -7,20 +7,35 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_USERNAME=mysql_user
+      - SPRING_DATASOURCE_PASSWORD=mysql_password
+    #      - SPRING_DATASOURCE_USERNAME=postgres
+    #      - SPRING_DATASOURCE_PASSWORD=postgres
     depends_on:
       - db
 
   db:
-    container_name: postgres_db
-    image: postgres:latest
+    container_name: mysql_db
+    image: mysql:latest
     restart: always
     ports:
-      - "5432:5432"
+      - "3306:3306"
     environment:
-      - POSTGRES_USER=${SPRING_DATASOURCE_USERNAME}
-      - POSTGRES_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
-      - POSTGRES_DB=${SPRING_DATASOURCE_DB}
+      - MYSQL_ROOT_PASSWORD=mysql_root_password
+      - MYSQL_DATABASE=your_database_name
+      - MYSQL_USER=mysql_user
+      - MYSQL_PASSWORD=mysql_password
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - ./mysql:/var/lib/mysql
+
+#    container_name: postgres_db
+#    image: postgres:latest
+#    restart: always
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      - POSTGRES_USER=${SPRING_DATASOURCE_USERNAME}
+#      - POSTGRES_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+#      - POSTGRES_DB=${SPRING_DATASOURCE_DB}
+#    volumes:
+#      - ./postgres:/var/lib/postgresql/data

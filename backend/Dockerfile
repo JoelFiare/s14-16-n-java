@@ -8,6 +8,10 @@ RUN chmod +x mvnw
 RUN ./mvnw package -DskipTests
 RUN mv -f target/*.jar app.jar
 
+# Etapa de construcción de MySQL
+FROM mysql:latest AS mysql_build
+
+# Etapa de ejecución
 FROM openjdk:21
 
 ARG PORT=8080
