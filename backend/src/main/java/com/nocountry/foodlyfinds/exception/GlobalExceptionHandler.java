@@ -2,7 +2,6 @@ package com.nocountry.foodlyfinds.exception;
 
 import com.nocountry.foodlyfinds.model.dto.response.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.UnexpectedTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,6 +107,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(errorResponse);
     }
 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException ex) {
+        String errorMessage = "An error occurred: " + ex.getMessage();
+        return createErrorResponse("IllegalArgumentException", errorMessage, request, HttpStatus.BAD_REQUEST);
+    }
+}
+
     private String extractInvalidArgument(String errorMessage) {
         // El mensaje de error generalmente contiene el nombre completo de la clase y el valor que causó el problema
         // Por ejemplo: "No enum constant com.nocountry.foodlyfinds.model.enums.EIssueType.WAITING_TIM"
@@ -122,3 +128,4 @@ public class GlobalExceptionHandler {
         }
     }
 }
+

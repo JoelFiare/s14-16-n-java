@@ -1,13 +1,21 @@
 # Etapa de construcción
-FROM maven:latest AS builder
+FROM openjdk:21 AS build
+
+COPY . /app
 WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
 
-COPY src ./src
-RUN mvn package -DskipTests
+RUN chmod +x mvnw
+RUN ./mvnw package -DskipTests
+RUN mv -f target/*.jar app.jar
 
-# Etapa final
 FROM openjdk:21
-COPY --from=builder /app/target/FoodlyFinds-0.0.1-SNAPSHOT.jar app.jar
-CMD ["java","-jar","app.jar"]
+
+ARG PORT=8080
+ENV PORT=${PORT}
+
+COPY --from=build /app/app.jar .
+
+RUN useradd runtime
+USER runtime
+
+ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-jar", "app.jar"]
