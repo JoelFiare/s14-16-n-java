@@ -9,7 +9,6 @@ import Profile from "./pages/Profile";
 import Bonus from "./pages/Bonus";
 import Welcome from "./pages/Welcome/Welcome";
 import Payout from "./components/Payout/Payout";
-import PaymentMethod from "./components/PaymentMethod/PaymentMethod";
 import ConfirmPayment from "./components/ConfirmPayment/ConfirmPayment";
 import Approved from "./components/Approved/Approved";
 import Compensation from "./components/Compensation/Compensation";
@@ -23,12 +22,11 @@ import FinalSuccess from "./components/FinalSuccess/FinalSuccess";
 import ConfirmOrder from "./components/ConfirmOrder/ConfirmOrder";
 import SearchedMeal from "./components/SearchedMeal/SearchedMeal";
 import OrderDetails from "./components/OrderDetails/OrderDetails";
-import { order } from './data/order'
 import Building from "./components/Building/Building";
 
 function App() {
   const [dataProducts, setDataProducts] = useState([]);
-  const [dataOrder, setDataOrder] = useState([])
+  const [dataOrder, setDataOrder] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -44,21 +42,21 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
-
-    setDataOrder(order)
   }, []);
+
 
   return (
     <>
       <AppContext.Provider
         value={{
           dataProducts,
-          dataOrder,
           selectedProduct,
           setSelectedProduct,
+          dataOrder,
+          setDataOrder,
+          loading,
         }}
       >
-
         <Routes>
           <Route
             path="/"
@@ -84,21 +82,21 @@ function App() {
             <Route
               path="busqueda"
             >
-              <Route
-                index
-                element={<SearchedMeal />}
+              <Route 
+                index 
+                element={<SearchedMeal />} 
               />
               <Route path="pagar">
                 <Route
+                  path="producto-elegido"
+                  element={<ChosenProduct />}
+                />
+                <Route
                   path="confirmar"
-                  element={<ConfirmOrder order={dataOrder} />}
+                  element={<ConfirmOrder />}
                 />
                 <Route
                   path="medio-de-pago"
-                  element={<PaymentMethod />}
-                />
-                <Route
-                  path="monto-de-efectivo"
                   element={<Payout />}
                 />
                 <Route
@@ -130,10 +128,6 @@ function App() {
                   element={<FinalSuccess />}
                 />
                 <Route
-                  path="producto-elegido"
-                  element={<ChosenProduct />}
-                />
-                <Route
                   path="aviso-de-llegada"
                   element={<Arrival />}
                 />
@@ -142,7 +136,6 @@ function App() {
                   element={<SearchResult />}
                 />
               </Route>
-              <Route path=":mealId" />
             </Route>
             <Route
               path="construccion"
